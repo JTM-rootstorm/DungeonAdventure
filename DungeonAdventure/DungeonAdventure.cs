@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Engine;
 using Engine.Creatures.Player;
 
 namespace DungeonAdventure
@@ -20,13 +21,9 @@ namespace DungeonAdventure
         {
             InitializeComponent();
 
-            _player = new Player();
+            Location location = new Location(1, "Home", "This is your home");
 
-            _player.currentHitPoints = 10;
-            _player.maximumHitPoints = 10;
-            _player.gold = 20;
-            _player.experiencePoints = 0;
-            _player.level = 1;
+            _player = new Player(10, 10, 20, 0, 1);
 
             lblHitPoints.Text = _player.currentHitPoints.ToString();
             lblGold.Text = _player.gold.ToString();

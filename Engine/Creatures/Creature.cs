@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Engine.Creatures
 {
     public class Creature
-    {
-        public int ID { get; set; }
-        public string name { get; set; }
+    {       
+        public int currentHitPoints { get; set; }
+        public int maximumHitPoints { get; set; }
 
         public string race { get; set; }
 
@@ -19,5 +19,11 @@ namespace Engine.Creatures
         public int intelligence { get; set; } = 8;
         public int wisdom { get; set; } = 8;
         public int charisma { get; set; } = 8;
+
+        public Creature(int currentHitPoints, int maximumHitPoints)
+        {
+            this.currentHitPoints = currentHitPoints;
+            this.maximumHitPoints = maximumHitPoints;
+        }
     }
 }
