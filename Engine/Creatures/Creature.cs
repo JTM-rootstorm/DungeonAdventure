@@ -8,6 +8,9 @@ namespace Engine.Creatures
 {
     public class Creature
     {
+        public int ID { get; set; }
+        public string name { get; set; }
+
         public string race { get; set; }
 
         public int strength { get; set; } = 8;

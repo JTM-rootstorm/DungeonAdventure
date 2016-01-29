@@ -41,8 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Creatures\Creature.cs" />
+    <Compile Include="Creatures\Monsters\Monster.cs" />
     <Compile Include="Creatures\Player\Player.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\Player\HealingPotion.cs" />
+    <Compile Include="Items\Weapon.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
