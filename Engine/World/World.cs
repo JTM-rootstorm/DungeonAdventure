@@ -13,12 +13,12 @@ namespace Engine.World
         public static readonly List<Quest> quests = new List<Quest>();
         public static readonly List<Location> locations = new List<Location>();
 
-        public const int ITEM_ID_RUSTY_SWORD = 1;
+        public const int WEAPON_ID_SHORT_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
         public const int ITEM_ID_SNAKE_FANG = 4;
         public const int ITEM_ID_SNAKESKIN = 5;
-        public const int ITEM_ID_CLUB = 6;
+        public const int WEAPON_ID_CLUB = 6;
         public const int ITEM_ID_HEALING_POTION = 7;
         public const int ITEM_ID_SPIDER_FANG = 8;
         public const int ITEM_ID_SPIDER_SILK = 9;
@@ -51,12 +51,14 @@ namespace Engine.World
 
         private static void PopulateItems()
         {
-            items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5));
+            items.Add(new Weapon(WEAPON_ID_SHORT_SWORD, "Shortsword", "Shortswords", 1, 6));
+
+
             items.Add(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
             items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
             items.Add(new Item(ITEM_ID_SNAKE_FANG, "Snake fang", "Snake fangs"));
             items.Add(new Item(ITEM_ID_SNAKESKIN, "Snakeskin", "Snakeskins"));
-            items.Add(new Weapon(ITEM_ID_CLUB, "Club", "Clubs", 3, 10));
+            items.Add(new Weapon(WEAPON_ID_CLUB, "Club", "Clubs", 3, 10));
             items.Add(new HealingPotion(ITEM_ID_HEALING_POTION, "Healing potion", "Healing potions", 5));
             items.Add(new Item(ITEM_ID_SPIDER_FANG, "Spider fang", "Spider fangs"));
             items.Add(new Item(ITEM_ID_SPIDER_SILK, "Spider silk", "Spider silks"));
@@ -65,15 +67,18 @@ namespace Engine.World
 
         private static void PopulateMonsters()
         {
-            Monster rat = new Monster(MONSTER_ID_RAT, "Rat", 5, 3, 10, 3, 3);
+            Monster rat = new Monster(MONSTER_ID_RAT, "Rat", 10, 1, 1, 10, 0, RandomNumberGenerator.NumberBetween(1, 3));
+            rat.SetAttributes(2, 11, 9, 2, 10, 4);
             rat.lootTable.Add(new LootItem(ItemByID(ITEM_ID_RAT_TAIL), 75, false));
             rat.lootTable.Add(new LootItem(ItemByID(ITEM_ID_PIECE_OF_FUR), 75, true));
 
-            Monster snake = new Monster(MONSTER_ID_SNAKE, "Snake", 5, 3, 10, 3, 3);
+            Monster snake = new Monster(MONSTER_ID_SNAKE, "Snake", 12, 3, 8, 50, 0, RandomNumberGenerator.NumberBetween(4, 22));
+            snake.SetAttributes(15, 14, 12, 1, 10, 3);
             snake.lootTable.Add(new LootItem(ItemByID(ITEM_ID_SNAKE_FANG), 75, false));
             snake.lootTable.Add(new LootItem(ItemByID(ITEM_ID_SNAKESKIN), 75, true));
 
-            Monster giantSpider = new Monster(MONSTER_ID_GIANT_SPIDER, "Giant spider", 20, 5, 40, 10, 10);
+            Monster giantSpider = new Monster(MONSTER_ID_GIANT_SPIDER, "Giant spider", 12, 1, 1, 10, 00, RandomNumberGenerator.NumberBetween(1, 3));
+            giantSpider.SetAttributes(2, 14, 8, 1, 10, 2);
             giantSpider.lootTable.Add(new LootItem(ItemByID(ITEM_ID_SPIDER_FANG), 75, true));
             giantSpider.lootTable.Add(new LootItem(ItemByID(ITEM_ID_SPIDER_SILK), 25, false));
 

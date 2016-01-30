@@ -10,6 +10,7 @@ namespace Engine.Creatures.Player
         public int experiencePoints { get; set; }
         public int level { get; set; }
 
+        public string race { get; set; }
         public string pClass { get; set; }
 
         public List<InventoryItem> inventory { get; set; }
