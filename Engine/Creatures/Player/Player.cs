@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.ComponentModel;
 using System;
 
 using Engine.Items;
+using Engine.Items.Player;
 
 namespace Engine.Creatures.Player
 {
@@ -63,12 +65,22 @@ namespace Engine.Creatures.Player
         public string pClass { get; set; }
         private int hitDie { get; set; }
 
-        public List<InventoryItem> inventory { get; set; }
-        public List<PlayerQuest> quests { get; set; }
+        public BindingList<InventoryItem> inventory { get; set; }
+        public BindingList<PlayerQuest> quests { get; set; }
 
         public Location currentLocation { get; set; }
 
         public Weapon currentWeapon { get; set; }
+
+        public List<Weapon> weapons
+        {
+            get { return inventory.Where(x => x.details is Weapon).Select(x => x.details as Weapon).ToList(); }
+        }
+
+        public List<HealingPotion> potions
+        {
+            get { return inventory.Where(x => x.details is HealingPotion).Select(x => x.details as HealingPotion).ToList(); }
+        }
 
         public Player(int currentHitPoints, int maxHitPoints, int str, int dexterity, int con, int intel, int wis, int charisma, string name) : base (currentHitPoints, maxHitPoints, name)
         {
@@ -77,8 +89,8 @@ namespace Engine.Creatures.Player
             SetAttributes(str, dexterity, con, intel, wis, charisma);
             AC = 10 + FindAttModifier(dexterity);
 
-            inventory = new List<InventoryItem>();
-            quests = new List<PlayerQuest>();
+            inventory = new BindingList<InventoryItem>();
+            quests = new BindingList<PlayerQuest>();
         }
 
         public void AddExperiencePoints(int experiencePointsToAdd)
@@ -96,6 +108,44 @@ namespace Engine.Creatures.Player
             return player;
         }
 
+        private void RaiseInventoryChangedEvent(Item item)
+        {
+            if(item is Weapon)
+            {
+                OnPropertyChanged("weapons");
+            }
+            if(item is HealingPotion)
+            {
+                OnPropertyChanged("potions");
+            }
+        }
+
+        public void RemoveItemFromInventory(Item itemToRemove, int quantity = 1)
+        {
+            InventoryItem item = inventory.SingleOrDefault(ii => ii.details.ID == itemToRemove.ID);
+
+            if(item == null)
+            {
+
+            }
+            else
+            {
+                item.quantity -= quantity;
+
+                if(item.quantity < 0)
+                {
+                    item.quantity = 0;
+                }
+
+                if(item.quantity == 0)
+                {
+                    inventory.Remove(item);
+                }
+
+                RaiseInventoryChangedEvent(itemToRemove);
+            }
+        }
+
         public bool HasRequiredItemToEnterThisLocation(Location location)
         {
             if(location.itemRequiredToEnter == null)
@@ -103,12 +153,12 @@ namespace Engine.Creatures.Player
                 return true;
             }
 
-            return inventory.Exists(ii => ii.details.ID == location.itemRequiredToEnter.ID);
+            return inventory.Any(ii => ii.details.ID == location.itemRequiredToEnter.ID);
         }
 
         public bool HasThisQuest(Quest quest)
         {
-            return quests.Exists(pq => pq.details.ID == quest.ID);
+            return quests.All(pq => pq.details.ID == quest.ID);
         }
 
         public bool CompletedThisQuest(Quest quest)
@@ -128,7 +178,7 @@ namespace Engine.Creatures.Player
         {
             foreach(QuestCompletionItem qci in quest.questCompletionItems)
             {
-                if(!inventory.Exists(ii => ii.details.ID == qci.details.ID && ii.quantity >= qci.quantity))
+                if(!inventory.Any(ii => ii.details.ID == qci.details.ID && ii.quantity >= qci.quantity))
                 {
                     return false;
                 }
@@ -145,13 +195,12 @@ namespace Engine.Creatures.Player
 
                 if(item != null)
                 {
-                    item.quantity -= qci.quantity;
-                    break;
+                    RemoveItemFromInventory(item.details, qci.quantity);
                 }
             }
         }
 
-        public void AddItemToInventory(Item itemToAdd)
+        public void AddItemToInventory(Item itemToAdd, int quantity = 1)
         {
             InventoryItem item = inventory.SingleOrDefault(ii => ii.details.ID == itemToAdd.ID);
 
@@ -161,8 +210,10 @@ namespace Engine.Creatures.Player
             }
             else
             {
-                item.quantity++;
+                item.quantity += quantity;
             }
+
+            RaiseInventoryChangedEvent(itemToAdd);
         }
 
         public void MarkQuestCompleted(Quest quest)
