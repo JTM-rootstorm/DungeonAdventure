@@ -135,7 +135,7 @@ namespace DungeonAdventure
                                 rtbMessages.Text += newLocation.questAvailableHere.rewardItem.name + Environment.NewLine;
                                 rtbMessages.Text += Environment.NewLine;
 
-                                _player.experiencePoints += newLocation.questAvailableHere.rewardExperiencePoints;
+                                _player.AddExperiencePoints(newLocation.questAvailableHere.rewardExperiencePoints);
                                 _player.gold += newLocation.questAvailableHere.rewardGold;
 
                                 // Add the reward item to the player's inventory
@@ -353,7 +353,7 @@ namespace DungeonAdventure
                 rtbMessages.Text += "You defeated the " + _currentMonster.name + Environment.NewLine;
 
                 // Give player experience points for killing the monster
-                _player.experiencePoints += _currentMonster.rewardExperiencePoints;
+                _player.AddExperiencePoints(_currentMonster.rewardExperiencePoints);
                 rtbMessages.Text += "You receive " + _currentMonster.rewardExperiencePoints.ToString() + " experience points" + Environment.NewLine;
 
                 // Give player gold for killing the monster 
@@ -520,7 +520,7 @@ namespace DungeonAdventure
 
         public void RefreshUI(bool fullRef = false)
         {
-            lblHitPoints.Text = _player.currentHitPoints.ToString();
+            lblHitPoints.Text = _player.currentHitPoints.ToString() + " / " + _player.maximumHitPoints.ToString();
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
 

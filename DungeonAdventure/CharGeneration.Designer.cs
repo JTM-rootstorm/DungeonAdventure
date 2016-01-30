@@ -49,8 +49,21 @@
             this.lblAbsIntMod = new System.Windows.Forms.Label();
             this.lblAbsWisMod = new System.Windows.Forms.Label();
             this.lblAbsChaMod = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cboRace = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btnRollAbs = new System.Windows.Forms.Button();
+            this.lblAbsStrRmod = new System.Windows.Forms.Label();
+            this.lblAbsDexRmod = new System.Windows.Forms.Label();
+            this.lblAbsConRmod = new System.Windows.Forms.Label();
+            this.lblAbsIntRmod = new System.Windows.Forms.Label();
+            this.lblAbsWisRmod = new System.Windows.Forms.Label();
+            this.lblAbsChaRmod = new System.Windows.Forms.Label();
+            this.raceSet = new System.Windows.Forms.Button();
+            this.chkStrRmod = new System.Windows.Forms.CheckBox();
+            this.chkDexRmod = new System.Windows.Forms.CheckBox();
+            this.chkConRmod = new System.Windows.Forms.CheckBox();
+            this.chkIntRmod = new System.Windows.Forms.CheckBox();
+            this.chkWisRmod = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -128,7 +141,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(106, 37);
+            this.label9.Location = new System.Drawing.Point(98, 37);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(61, 13);
             this.label9.TabIndex = 8;
@@ -137,103 +150,115 @@
             // lblAbsStr
             // 
             this.lblAbsStr.AutoSize = true;
-            this.lblAbsStr.Location = new System.Drawing.Point(198, 66);
+            this.lblAbsStr.Location = new System.Drawing.Point(217, 66);
             this.lblAbsStr.Name = "lblAbsStr";
             this.lblAbsStr.Size = new System.Drawing.Size(0, 13);
             this.lblAbsStr.TabIndex = 9;
+            this.lblAbsStr.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsDex
             // 
             this.lblAbsDex.AutoSize = true;
-            this.lblAbsDex.Location = new System.Drawing.Point(198, 92);
+            this.lblAbsDex.Location = new System.Drawing.Point(217, 92);
             this.lblAbsDex.Name = "lblAbsDex";
             this.lblAbsDex.Size = new System.Drawing.Size(0, 13);
             this.lblAbsDex.TabIndex = 10;
+            this.lblAbsDex.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsCon
             // 
             this.lblAbsCon.AutoSize = true;
-            this.lblAbsCon.Location = new System.Drawing.Point(198, 118);
+            this.lblAbsCon.Location = new System.Drawing.Point(217, 118);
             this.lblAbsCon.Name = "lblAbsCon";
             this.lblAbsCon.Size = new System.Drawing.Size(0, 13);
             this.lblAbsCon.TabIndex = 11;
+            this.lblAbsCon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsInt
             // 
             this.lblAbsInt.AutoSize = true;
-            this.lblAbsInt.Location = new System.Drawing.Point(198, 144);
+            this.lblAbsInt.Location = new System.Drawing.Point(217, 144);
             this.lblAbsInt.Name = "lblAbsInt";
             this.lblAbsInt.Size = new System.Drawing.Size(0, 13);
             this.lblAbsInt.TabIndex = 12;
+            this.lblAbsInt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsWis
             // 
             this.lblAbsWis.AutoSize = true;
-            this.lblAbsWis.Location = new System.Drawing.Point(198, 170);
+            this.lblAbsWis.Location = new System.Drawing.Point(217, 170);
             this.lblAbsWis.Name = "lblAbsWis";
             this.lblAbsWis.Size = new System.Drawing.Size(0, 13);
             this.lblAbsWis.TabIndex = 13;
+            this.lblAbsWis.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsCha
             // 
             this.lblAbsCha.AutoSize = true;
-            this.lblAbsCha.Location = new System.Drawing.Point(198, 196);
+            this.lblAbsCha.Location = new System.Drawing.Point(217, 196);
             this.lblAbsCha.Name = "lblAbsCha";
             this.lblAbsCha.Size = new System.Drawing.Size(0, 13);
             this.lblAbsCha.TabIndex = 14;
+            this.lblAbsCha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsStrMod
             // 
             this.lblAbsStrMod.AutoSize = true;
-            this.lblAbsStrMod.Location = new System.Drawing.Point(276, 66);
+            this.lblAbsStrMod.Location = new System.Drawing.Point(295, 66);
             this.lblAbsStrMod.Name = "lblAbsStrMod";
             this.lblAbsStrMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsStrMod.TabIndex = 15;
+            this.lblAbsStrMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsDexMod
             // 
             this.lblAbsDexMod.AutoSize = true;
-            this.lblAbsDexMod.Location = new System.Drawing.Point(276, 92);
+            this.lblAbsDexMod.Location = new System.Drawing.Point(295, 92);
             this.lblAbsDexMod.Name = "lblAbsDexMod";
             this.lblAbsDexMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsDexMod.TabIndex = 16;
+            this.lblAbsDexMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsConMod
             // 
             this.lblAbsConMod.AutoSize = true;
-            this.lblAbsConMod.Location = new System.Drawing.Point(276, 118);
+            this.lblAbsConMod.Location = new System.Drawing.Point(295, 118);
             this.lblAbsConMod.Name = "lblAbsConMod";
             this.lblAbsConMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsConMod.TabIndex = 17;
+            this.lblAbsConMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsIntMod
             // 
             this.lblAbsIntMod.AutoSize = true;
-            this.lblAbsIntMod.Location = new System.Drawing.Point(276, 144);
+            this.lblAbsIntMod.Location = new System.Drawing.Point(295, 144);
             this.lblAbsIntMod.Name = "lblAbsIntMod";
             this.lblAbsIntMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsIntMod.TabIndex = 18;
+            this.lblAbsIntMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsWisMod
             // 
             this.lblAbsWisMod.AutoSize = true;
-            this.lblAbsWisMod.Location = new System.Drawing.Point(276, 170);
+            this.lblAbsWisMod.Location = new System.Drawing.Point(295, 170);
             this.lblAbsWisMod.Name = "lblAbsWisMod";
             this.lblAbsWisMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsWisMod.TabIndex = 19;
+            this.lblAbsWisMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAbsChaMod
             // 
             this.lblAbsChaMod.AutoSize = true;
-            this.lblAbsChaMod.Location = new System.Drawing.Point(276, 196);
+            this.lblAbsChaMod.Location = new System.Drawing.Point(295, 196);
             this.lblAbsChaMod.Name = "lblAbsChaMod";
             this.lblAbsChaMod.Size = new System.Drawing.Size(0, 13);
             this.lblAbsChaMod.TabIndex = 20;
+            this.lblAbsChaMod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox1
+            // cboRace
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cboRace.FormattingEnabled = true;
+            this.cboRace.Items.AddRange(new object[] {
             "Dwarf - Hill",
             "Dwarf - Moutain",
             "Elf- High",
@@ -247,27 +272,169 @@
             "Half-Elf",
             "Half-Orc",
             "Tiefling"});
-            this.comboBox1.Location = new System.Drawing.Point(109, 249);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 21;
+            this.cboRace.Location = new System.Drawing.Point(77, 249);
+            this.cboRace.Name = "cboRace";
+            this.cboRace.Size = new System.Drawing.Size(121, 21);
+            this.cboRace.TabIndex = 21;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(23, 252);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(33, 13);
+            this.label10.Size = new System.Drawing.Size(36, 13);
             this.label10.TabIndex = 22;
-            this.label10.Text = "Race";
+            this.label10.Text = "Race:";
+            // 
+            // btnRollAbs
+            // 
+            this.btnRollAbs.Location = new System.Drawing.Point(135, 305);
+            this.btnRollAbs.Name = "btnRollAbs";
+            this.btnRollAbs.Size = new System.Drawing.Size(107, 42);
+            this.btnRollAbs.TabIndex = 28;
+            this.btnRollAbs.Text = "Roll!";
+            this.btnRollAbs.UseVisualStyleBackColor = true;
+            this.btnRollAbs.Click += new System.EventHandler(this.btnRollAbs_Click);
+            // 
+            // lblAbsStrRmod
+            // 
+            this.lblAbsStrRmod.AutoSize = true;
+            this.lblAbsStrRmod.Location = new System.Drawing.Point(129, 66);
+            this.lblAbsStrRmod.Name = "lblAbsStrRmod";
+            this.lblAbsStrRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsStrRmod.TabIndex = 29;
+            this.lblAbsStrRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblAbsDexRmod
+            // 
+            this.lblAbsDexRmod.AutoSize = true;
+            this.lblAbsDexRmod.Location = new System.Drawing.Point(129, 92);
+            this.lblAbsDexRmod.Name = "lblAbsDexRmod";
+            this.lblAbsDexRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsDexRmod.TabIndex = 30;
+            this.lblAbsDexRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblAbsConRmod
+            // 
+            this.lblAbsConRmod.AutoSize = true;
+            this.lblAbsConRmod.Location = new System.Drawing.Point(129, 118);
+            this.lblAbsConRmod.Name = "lblAbsConRmod";
+            this.lblAbsConRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsConRmod.TabIndex = 31;
+            this.lblAbsConRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblAbsIntRmod
+            // 
+            this.lblAbsIntRmod.AutoSize = true;
+            this.lblAbsIntRmod.Location = new System.Drawing.Point(129, 144);
+            this.lblAbsIntRmod.Name = "lblAbsIntRmod";
+            this.lblAbsIntRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsIntRmod.TabIndex = 32;
+            this.lblAbsIntRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblAbsWisRmod
+            // 
+            this.lblAbsWisRmod.AutoSize = true;
+            this.lblAbsWisRmod.Location = new System.Drawing.Point(129, 170);
+            this.lblAbsWisRmod.Name = "lblAbsWisRmod";
+            this.lblAbsWisRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsWisRmod.TabIndex = 33;
+            this.lblAbsWisRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblAbsChaRmod
+            // 
+            this.lblAbsChaRmod.AutoSize = true;
+            this.lblAbsChaRmod.Location = new System.Drawing.Point(129, 196);
+            this.lblAbsChaRmod.Name = "lblAbsChaRmod";
+            this.lblAbsChaRmod.Size = new System.Drawing.Size(0, 13);
+            this.lblAbsChaRmod.TabIndex = 34;
+            this.lblAbsChaRmod.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // raceSet
+            // 
+            this.raceSet.Location = new System.Drawing.Point(204, 247);
+            this.raceSet.Name = "raceSet";
+            this.raceSet.Size = new System.Drawing.Size(75, 23);
+            this.raceSet.TabIndex = 35;
+            this.raceSet.Text = "Set";
+            this.raceSet.UseVisualStyleBackColor = true;
+            this.raceSet.Click += new System.EventHandler(this.raceSet_Click);
+            // 
+            // chkStrRmod
+            // 
+            this.chkStrRmod.AutoSize = true;
+            this.chkStrRmod.Enabled = false;
+            this.chkStrRmod.Location = new System.Drawing.Point(339, 66);
+            this.chkStrRmod.Name = "chkStrRmod";
+            this.chkStrRmod.Size = new System.Drawing.Size(15, 14);
+            this.chkStrRmod.TabIndex = 36;
+            this.chkStrRmod.UseVisualStyleBackColor = true;
+            this.chkStrRmod.CheckedChanged += new System.EventHandler(this.chkStrRmod_CheckedChanged);
+            // 
+            // chkDexRmod
+            // 
+            this.chkDexRmod.AutoSize = true;
+            this.chkDexRmod.Enabled = false;
+            this.chkDexRmod.Location = new System.Drawing.Point(339, 92);
+            this.chkDexRmod.Name = "chkDexRmod";
+            this.chkDexRmod.Size = new System.Drawing.Size(15, 14);
+            this.chkDexRmod.TabIndex = 37;
+            this.chkDexRmod.UseVisualStyleBackColor = true;
+            this.chkDexRmod.CheckedChanged += new System.EventHandler(this.chkDexRmod_CheckedChanged);
+            // 
+            // chkConRmod
+            // 
+            this.chkConRmod.AutoSize = true;
+            this.chkConRmod.Enabled = false;
+            this.chkConRmod.Location = new System.Drawing.Point(339, 118);
+            this.chkConRmod.Name = "chkConRmod";
+            this.chkConRmod.Size = new System.Drawing.Size(15, 14);
+            this.chkConRmod.TabIndex = 38;
+            this.chkConRmod.UseVisualStyleBackColor = true;
+            this.chkConRmod.CheckedChanged += new System.EventHandler(this.chkConRmod_CheckedChanged);
+            // 
+            // chkIntRmod
+            // 
+            this.chkIntRmod.AutoSize = true;
+            this.chkIntRmod.Enabled = false;
+            this.chkIntRmod.Location = new System.Drawing.Point(339, 144);
+            this.chkIntRmod.Name = "chkIntRmod";
+            this.chkIntRmod.Size = new System.Drawing.Size(15, 14);
+            this.chkIntRmod.TabIndex = 39;
+            this.chkIntRmod.UseVisualStyleBackColor = true;
+            this.chkIntRmod.CheckedChanged += new System.EventHandler(this.chkIntRmod_CheckedChanged);
+            // 
+            // chkWisRmod
+            // 
+            this.chkWisRmod.AutoSize = true;
+            this.chkWisRmod.Enabled = false;
+            this.chkWisRmod.Location = new System.Drawing.Point(339, 170);
+            this.chkWisRmod.Name = "chkWisRmod";
+            this.chkWisRmod.Size = new System.Drawing.Size(15, 14);
+            this.chkWisRmod.TabIndex = 40;
+            this.chkWisRmod.UseVisualStyleBackColor = true;
+            this.chkWisRmod.CheckedChanged += new System.EventHandler(this.chkWisRmod_CheckedChanged);
             // 
             // CharGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 419);
+            this.ClientSize = new System.Drawing.Size(400, 419);
+            this.Controls.Add(this.chkWisRmod);
+            this.Controls.Add(this.chkIntRmod);
+            this.Controls.Add(this.chkConRmod);
+            this.Controls.Add(this.chkDexRmod);
+            this.Controls.Add(this.chkStrRmod);
+            this.Controls.Add(this.raceSet);
+            this.Controls.Add(this.lblAbsChaRmod);
+            this.Controls.Add(this.lblAbsWisRmod);
+            this.Controls.Add(this.lblAbsIntRmod);
+            this.Controls.Add(this.lblAbsConRmod);
+            this.Controls.Add(this.lblAbsDexRmod);
+            this.Controls.Add(this.lblAbsStrRmod);
+            this.Controls.Add(this.btnRollAbs);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cboRace);
             this.Controls.Add(this.lblAbsChaMod);
             this.Controls.Add(this.lblAbsWisMod);
             this.Controls.Add(this.lblAbsIntMod);
@@ -319,7 +486,20 @@
         private System.Windows.Forms.Label lblAbsIntMod;
         private System.Windows.Forms.Label lblAbsWisMod;
         private System.Windows.Forms.Label lblAbsChaMod;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cboRace;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnRollAbs;
+        private System.Windows.Forms.Label lblAbsStrRmod;
+        private System.Windows.Forms.Label lblAbsDexRmod;
+        private System.Windows.Forms.Label lblAbsConRmod;
+        private System.Windows.Forms.Label lblAbsIntRmod;
+        private System.Windows.Forms.Label lblAbsWisRmod;
+        private System.Windows.Forms.Label lblAbsChaRmod;
+        private System.Windows.Forms.Button raceSet;
+        private System.Windows.Forms.CheckBox chkStrRmod;
+        private System.Windows.Forms.CheckBox chkDexRmod;
+        private System.Windows.Forms.CheckBox chkConRmod;
+        private System.Windows.Forms.CheckBox chkIntRmod;
+        private System.Windows.Forms.CheckBox chkWisRmod;
     }
 }

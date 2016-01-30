@@ -1,11 +1,30 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Engine.Creatures
 {
-    public class Creature
-    {       
-        public int currentHitPoints { get; set; }
-        public int maximumHitPoints { get; set; }      
+    public class Creature : INotifyPropertyChanged
+    {
+        private int _currentHitPoints;
+        public int currentHitPoints
+        {
+            get { return _currentHitPoints; }
+            set
+            {
+                _currentHitPoints = value;
+                OnPropertyChanged("currentHitPoints");
+            }
+        }
+        private int _maximumHitPoints;
+        public int maximumHitPoints
+        {
+            get { return _maximumHitPoints; }
+            set
+            {
+                _maximumHitPoints = value;
+                OnPropertyChanged("maximumHitPoints");
+            }
+        } 
 
         public int strength { get; set; } = 8;
         public int dexterity { get; set; } = 8;
@@ -46,6 +65,16 @@ namespace Engine.Creatures
         public int FindAttModifier(int stat)
         {
             return (int)Math.Floor((stat - 10.0d) / 2.0d);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
         }
     }
 }

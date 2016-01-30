@@ -9,23 +9,59 @@ namespace Engine.Creatures.Player
 {
     public class Player : Creature
     {
-        public int gold { get; set; } = 0;
-        public int experiencePoints { get; set; } = 0;
+        private int _gold = 0;
+        public int gold
+        {
+            get { return _gold; }
+            set
+            {
+                _gold = value;
+                OnPropertyChanged("gold");
+            }
+        }
+        private int _experiencePoints = 0;
+        public int experiencePoints
+        {
+            get { return _experiencePoints; }
+            private set
+            {
+                _experiencePoints = value;
+                OnPropertyChanged("experiencePoints");
+
+                if(experiencePoints >= levelArray[level, 0])
+                {
+                    level++;
+                }
+            }
+        }
+        private int _level = 1;
         public int level
         {
-            get { return ((experiencePoints / 100) + 1); }
+            get { return _level; }
+            private set
+            {
+                _level = value;
+                OnPropertyChanged("level");
+            }
         }
 
         public int[,] levelArray = new int[20, 2] { { 0, 2 }, { 300, 2 }, { 900, 2 }, { 2700, 2 }, { 6500, 3 }, { 14000, 3 }, { 23000, 3 }, { 34000, 3 }, { 48000, 4 }, { 64000, 4 },
         { 85000, 4 }, { 100000, 4 }, { 120000, 5 }, { 140000, 5 }, { 165000, 5 }, { 195000, 5 }, { 225000, 6 }, { 265000, 6 }, { 305000, 6 }, { 355000, 6 }};
 
         public int AC { get; set; }
-        public int profBonus { get; set; }
+        public int profBonus
+        {
+          get { return levelArray[level - 1, 1]; }
+          set
+            {
+                profBonus = value;
+            }
+        }
         public int damageMod { get; set; }
 
         public string race { get; set; }
         public string pClass { get; set; }
-        public int hitDie { get; set; }
+        private int hitDie { get; set; }
 
         public List<InventoryItem> inventory { get; set; }
         public List<PlayerQuest> quests { get; set; }
