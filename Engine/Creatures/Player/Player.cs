@@ -6,9 +6,13 @@ namespace Engine.Creatures.Player
 {
     public class Player : Creature
     {
-        public int gold { get; set; }
-        public int experiencePoints { get; set; }
-        public int level { get; set; }
+        public int gold { get; set; } = 0;
+        public int experiencePoints { get; set; } = 0;
+        public int level { get; set; } = 1;
+
+        public int AC { get; set; }
+        public int profBonus { get; set; }
+        public int damageMod { get; set; }
 
         public string race { get; set; }
         public string pClass { get; set; }
@@ -26,6 +30,14 @@ namespace Engine.Creatures.Player
 
             inventory = new List<InventoryItem>();
             quests = new List<PlayerQuest>();
+        }
+
+        public Player(int maxHitPoints, int str, int dexterity, int con, int intel, int wis, int charisma) : base (maxHitPoints, maxHitPoints)
+        {
+            currentHitPoints = maxHitPoints;
+            maximumHitPoints = maxHitPoints;
+            SetAttributes(str, dexterity, con, intel, wis, charisma);
+            AC = 10 + FindAttModifier(dexterity);
         }
 
         public bool HasRequiredItemToEnterThisLocation(Location location)

@@ -14,10 +14,19 @@ namespace Engine.Creatures
         public int wisdom { get; set; } = 8;
         public int charisma { get; set; } = 8;
 
+        public int attackMod { get; set; }
+
         public Creature(int currentHitPoints, int maximumHitPoints)
         {
             this.currentHitPoints = currentHitPoints;
             this.maximumHitPoints = maximumHitPoints;
+        }
+
+        public Creature(int currentHitPoints, int maximumHitPoints, int attackMod)
+        {
+            this.currentHitPoints = currentHitPoints;
+            this.maximumHitPoints = maximumHitPoints;
+            this.attackMod = attackMod;
         }
 
         public void SetAttributes(int str, int dex, int con, int intel, int wis, int charisma)
@@ -30,7 +39,7 @@ namespace Engine.Creatures
             this.charisma = charisma;
         }
 
-        public static int FindAttModifier(int stat)
+        public int FindAttModifier(int stat)
         {
             return (int)Math.Floor((stat - 10.0d) / 2.0d);
         }

@@ -165,8 +165,9 @@ namespace DungeonAdventure
                     // Make a new monster, using the values from the standard monster in the World.Monster list
                     Monster standardMonster = World.MonsterByID(newLocation.monsterLivingHere.ID);
 
-                    _currentMonster = new Monster(standardMonster.ID, standardMonster.name, standardMonster.minimumDamage, standardMonster.maximumDamage,
-                        standardMonster.rewardExperiencePoints, standardMonster.rewardGold, standardMonster.currentHitPoints, standardMonster.maximumHitPoints);
+                    _currentMonster = new Monster(standardMonster.ID, standardMonster.name, standardMonster.AC, standardMonster.attackMod, 
+                        standardMonster.minimumDamage, standardMonster.maximumDamage, standardMonster.rewardExperiencePoints, standardMonster.rewardGold, 
+                        standardMonster.maximumHitPoints);
 
                     foreach (LootItem lootItem in standardMonster.lootTable)
                     {
@@ -303,17 +304,22 @@ namespace DungeonAdventure
 
         private void btnUseWeapon_Click(object sender, EventArgs e)
         {
-            // Get the currently selected weapon from the cboWeapons ComboBox
-            Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
+            int monsterInit = RandomNumberGenerator.NumberBetween(1, 20) + _currentMonster.dexterity;
+            int playerInit = RandomNumberGenerator.NumberBetween(1, 20) + _player.dexterity;
 
-            // Determine the amount of damage to do to the monster
-            int damageToMonster = RandomNumberGenerator.NumberBetween(currentWeapon.minimumDamage, currentWeapon.maximumDamage);
+            // Debug stuff
+            rtbMessages.Text += Environment.NewLine;
+            rtbMessages.Text += "Player rolled a initiative of " + playerInit.ToString() + Environment.NewLine;
+            rtbMessages.Text += "Monster rolled a initiative of " + monsterInit.ToString() + Environment.NewLine;
 
-            // Apply the damage to the monster's CurrentHitPoints
-            _currentMonster.currentHitPoints -= damageToMonster;
-
-            // Display message
-            rtbMessages.Text += "You hit the " + _currentMonster.name + " for " + damageToMonster.ToString() + " points." + Environment.NewLine;
+            if (playerInit > monsterInit)
+            {
+                TakeTurn(true);
+            }
+            else if (playerInit < monsterInit)
+            {
+                TakeTurn(false);
+            }
 
             // Check if the monster is dead
             if (_currentMonster.currentHitPoints <= 0)
@@ -370,14 +376,7 @@ namespace DungeonAdventure
                 }
 
                 // Refresh player information and inventory controls
-                lblHitPoints.Text = _player.currentHitPoints.ToString();
-                lblGold.Text = _player.gold.ToString();
-                lblExperience.Text = _player.experiencePoints.ToString();
-                lblLevel.Text = _player.level.ToString();
-
-                UpdateInventoryListInUI();
-                UpdateWeaponListInUI();
-                UpdatePotionListInUI();
+                RefreshUI(true);
 
                 // Add a blank line to the messages box, just for appearance.
                 rtbMessages.Text += Environment.NewLine;
@@ -388,12 +387,6 @@ namespace DungeonAdventure
             /* Keeping the above commented so it 
                    1. refreshes when the player leaves and then returns
                    2. doesn't heal the player */
-            }
-            else
-            {
-                // Monster is still alive
-
-                MonsterTurn();
             }
         }
 
@@ -424,34 +417,96 @@ namespace DungeonAdventure
             // Display message
             rtbMessages.Text += "You drink a " + potion.name + Environment.NewLine;
 
-            MonsterTurn();
+            TakeTurn(false);
 
             // Refresh player data in UI
+            RefreshUI();
+        }
+
+        public void TakeTurn(bool playerTurn)
+        {
+            int attackRoll = 0, damageDelt = 0;
+
+            if (playerTurn)
+            {
+                // Get the currently selected weapon from the cboWeapons ComboBox
+                Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
+
+                if (currentWeapon.finesse)
+                {
+                    if(_player.FindAttModifier(_player.strength) >= _player.FindAttModifier(_player.dexterity))
+                    {
+                        _player.attackMod = _player.profBonus + _player.FindAttModifier(_player.strength);
+                        _player.damageMod = _player.FindAttModifier(_player.strength);
+                    }
+                    else
+                    {
+                        _player.attackMod = _player.profBonus + _player.FindAttModifier(_player.dexterity);
+                        _player.damageMod = _player.FindAttModifier(_player.dexterity);
+                    }
+                }
+
+                attackRoll = RandomNumberGenerator.NumberBetween(0, 20) + _player.attackMod;
+
+                if (attackRoll >= _currentMonster.AC)
+                {
+                    // Determine the amount of damage to do to the monster
+                    damageDelt = RandomNumberGenerator.NumberBetween(currentWeapon.minimumDamage, currentWeapon.maximumDamage) + _player.damageMod;
+
+                    // Apply the damage to the monster's CurrentHitPoints
+                    _currentMonster.currentHitPoints -= damageDelt;
+
+                    // Display message
+                    rtbMessages.Text += "You hit the " + _currentMonster.name + " for " + damageDelt.ToString() + " points." + Environment.NewLine;
+                }
+            }
+            else if (!playerTurn)
+            {
+                // Monster gets their turn to attack
+
+                // Determine if the monster hits
+                attackRoll = RandomNumberGenerator.NumberBetween(1, 20) + _currentMonster.attackMod;
+
+                if (attackRoll >= _player.AC)
+                {
+                    // Determine the amount of damage the monster does to the player
+                    damageDelt = RandomNumberGenerator.NumberBetween(_currentMonster.minimumDamage, _currentMonster.maximumDamage);
+
+                    // Display message
+                    rtbMessages.Text += "The " + _currentMonster.name + " did " + damageDelt.ToString() + " points of damage." + Environment.NewLine;
+
+                    // Subtract damage from player
+                    _player.currentHitPoints -= damageDelt;
+
+                    if (_player.currentHitPoints <= 0)
+                    {
+                        // Display message
+                        rtbMessages.Text += "The " + _currentMonster.name + " killed you." + Environment.NewLine;
+
+                        // Move player to "Home"
+                        MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
+                    }
+                }
+                else
+                {
+                    rtbMessages.Text += "The " + _currentMonster.name + " missed!" + Environment.NewLine;
+                }
+            }      
+        }
+
+        public void RefreshUI(bool fullRef = false)
+        {
             lblHitPoints.Text = _player.currentHitPoints.ToString();
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
-        }
 
-        public void MonsterTurn()
-        {
-            // Monster gets their turn to attack
-
-            // Determine the amount of damage the monster does to the player
-            int damageToPlayer = RandomNumberGenerator.NumberBetween(_currentMonster.minimumDamage, _currentMonster.maximumDamage);
-
-            // Display message
-            rtbMessages.Text += "The " + _currentMonster.name + " did " + damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
-
-            // Subtract damage from player
-            _player.currentHitPoints -= damageToPlayer;
-
-            if (_player.currentHitPoints <= 0)
+            if (fullRef)
             {
-                // Display message
-                rtbMessages.Text += "The " + _currentMonster.name + " killed you." + Environment.NewLine;
+                lblGold.Text = _player.gold.ToString();
+                lblExperience.Text = _player.experiencePoints.ToString();
+                lblLevel.Text = _player.level.ToString();
 
-                // Move player to "Home"
-                MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
+                UpdateWeaponListInUI();
             }
         }
     }
