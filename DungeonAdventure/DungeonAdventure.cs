@@ -25,7 +25,7 @@ namespace DungeonAdventure
 
             Location location = new Location(1, "Home", "This is your home");
 
-            _player = new Player(10, 10, 20, 0, 1);
+            _player = new Player(10, 10, 20, 0);
             MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
             _player.inventory.Add(new InventoryItem(World.ItemByID(World.WEAPON_ID_SHORT_SWORD), 1));
             
@@ -53,6 +53,18 @@ namespace DungeonAdventure
         private void btnWest_Click(object sender, EventArgs e)
         {
             MoveTo(_player.currentLocation.locationToWest);
+        }
+
+        private void rtbLocation_TextChanged(object sender, EventArgs e)
+        {
+            rtbLocation.SelectionStart = rtbMessages.Text.Length;
+            rtbLocation.ScrollToCaret();
+        }
+
+        private void rtbMessages_TextChanged(object sender, EventArgs e)
+        {
+            rtbMessages.SelectionStart = rtbMessages.Text.Length;
+            rtbMessages.ScrollToCaret();
         }
 
         private void MoveTo(Location newLocation)
