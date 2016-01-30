@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharGeneration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharGeneration.Designer.cs">
+      <DependentUpon>CharGeneration.cs</DependentUpon>
+    </Compile>
     <Compile Include="DungeonAdventure.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CharGeneration.resx">
+      <DependentUpon>CharGeneration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DungeonAdventure.resx">
       <DependentUpon>DungeonAdventure.cs</DependentUpon>
     </EmbeddedResource>

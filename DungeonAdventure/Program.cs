@@ -13,7 +13,7 @@ namespace DungeonAdventure
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DungeonAdventure());
+            Application.Run(new CharGeneration());
         }
     }
 }

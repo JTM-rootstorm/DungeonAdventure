@@ -16,6 +16,9 @@ namespace Engine.Creatures.Player
             get { return ((experiencePoints / 100) + 1); }
         }
 
+        public int[,] levelArray = new int[20, 2] { { 0, 2 }, { 300, 2 }, { 900, 2 }, { 2700, 2 }, { 6500, 3 }, { 14000, 3 }, { 23000, 3 }, { 34000, 3 }, { 48000, 4 }, { 64000, 4 },
+        { 85000, 4 }, { 100000, 4 }, { 120000, 5 }, { 140000, 5 }, { 165000, 5 }, { 195000, 5 }, { 225000, 6 }, { 265000, 6 }, { 305000, 6 }, { 355000, 6 }};
+
         public int AC { get; set; }
         public int profBonus { get; set; }
         public int damageMod { get; set; }
@@ -40,6 +43,12 @@ namespace Engine.Creatures.Player
 
             inventory = new List<InventoryItem>();
             quests = new List<PlayerQuest>();
+        }
+
+        public void AddExperiencePoints(int experiencePointsToAdd)
+        {
+            experiencePoints += experiencePointsToAdd;
+
         }
 
         public static Player CreateDefaultPlayer()
@@ -191,6 +200,13 @@ namespace Engine.Creatures.Player
             currentLocation.AppendChild(playerData.CreateTextNode(this.currentLocation.ID.ToString()));
             stats.AppendChild(currentLocation);
 
+            if (currentWeapon != null)
+            {
+                XmlNode currentWeapon = playerData.CreateElement("CurrentWeapon");
+                currentWeapon.AppendChild(playerData.CreateTextNode(this.currentWeapon.ID.ToString()));
+                stats.AppendChild(currentWeapon);
+            }
+
             // Create the "InventoryItems" child node to hold each InventoryItem node
             XmlNode inventoryItems = playerData.CreateElement("InventoryItems");
             player.AppendChild(inventoryItems);
@@ -260,6 +276,12 @@ namespace Engine.Creatures.Player
 
                 int currentLocationID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentLocation").InnerText);
                 player.currentLocation = World.World.LocationByID(currentLocationID);
+
+                if(playerData.SelectSingleNode("/Player/Stats/CurrentWeapon") != null)
+                {
+                    int currentWeaponID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentWeapon").InnerText);
+                    player.currentWeapon = (Weapon)World.World.ItemByID(currentWeaponID);
+                }
 
                 foreach (XmlNode node in playerData.SelectNodes("/Player/InventoryItems/InventoryItem"))
                 {
