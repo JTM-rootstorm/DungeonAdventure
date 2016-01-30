@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -18,21 +19,23 @@ namespace DungeonAdventure
     {
         private Player _player;
         private Monster _currentMonster;
+        private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
 
         public DungeonAdventure()
         {
             InitializeComponent();
 
-            Location location = new Location(1, "Home", "This is your home");
+            if (File.Exists(PLAYER_DATA_FILE_NAME))
+            {
+                _player = Player.CreatePlayerFromXmlString(File.ReadAllText(PLAYER_DATA_FILE_NAME));
+            }
+            else
+            {
+                _player = Player.CreateDefaultPlayer();
+            }
 
-            _player = new Player(10, 10, 20, 0);
-            MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
-            _player.inventory.Add(new InventoryItem(World.ItemByID(World.WEAPON_ID_SHORT_SWORD), 1));
-            
-            lblHitPoints.Text = _player.currentHitPoints.ToString();
-            lblGold.Text = _player.gold.ToString();
-            lblExperience.Text = _player.experiencePoints.ToString();
-            lblLevel.Text = _player.level.ToString();
+            MoveTo(_player.currentLocation);
+            RefreshUI(true);
         }
 
         private void btnNorth_Click(object sender, EventArgs e)
@@ -520,6 +523,11 @@ namespace DungeonAdventure
 
                 UpdateWeaponListInUI();
             }
+        }
+
+        private void DungeonAdventure_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXMLString());
         }
     }
 }
