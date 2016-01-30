@@ -7,7 +7,6 @@ namespace Engine.Creatures.Monsters
     public class Monster : Creature
     {
         public int ID { get; set; }
-        public string name { get; set; }
         public int AC { get; set; }
         public int maximumDamage { get; set; }
         public int minimumDamage { get; set; }
@@ -17,10 +16,9 @@ namespace Engine.Creatures.Monsters
         public List<LootItem> lootTable { get; set; }
 
         public Monster(int ID, string name, int AC, int attackBonus, int minimumDamage, int maximumDamage, 
-            int rewardExperiencePoints, int rewardGold, int maximumHitPoints) : base(maximumHitPoints, maximumHitPoints, attackBonus)
+            int rewardExperiencePoints, int rewardGold, int maximumHitPoints) : base(maximumHitPoints, maximumHitPoints, attackBonus, name)
         {
             this.ID = ID;
-            this.name = name;
             this.AC = AC;
             this.minimumDamage = minimumDamage;
             this.maximumDamage = maximumDamage;

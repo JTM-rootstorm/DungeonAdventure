@@ -16,17 +16,21 @@ namespace Engine.Creatures
 
         public int attackMod { get; set; }
 
-        public Creature(int currentHitPoints, int maximumHitPoints)
+        public string name { get; set; }
+
+        public Creature(int currentHitPoints, int maximumHitPoints, string name)
         {
             this.currentHitPoints = currentHitPoints;
             this.maximumHitPoints = maximumHitPoints;
+            this.name = name;
         }
 
-        public Creature(int currentHitPoints, int maximumHitPoints, int attackMod)
+        public Creature(int currentHitPoints, int maximumHitPoints, int attackMod, string name)
         {
             this.currentHitPoints = currentHitPoints;
             this.maximumHitPoints = maximumHitPoints;
             this.attackMod = attackMod;
+            this.name = name;
         }
 
         public void SetAttributes(int str, int dex, int con, int intel, int wis, int charisma)

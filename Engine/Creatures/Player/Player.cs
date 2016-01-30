@@ -20,13 +20,14 @@ namespace Engine.Creatures.Player
 
         public string race { get; set; }
         public string pClass { get; set; }
+        public int hitDie { get; set; }
 
         public List<InventoryItem> inventory { get; set; }
         public List<PlayerQuest> quests { get; set; }
 
         public Location currentLocation { get; set; }
 
-        public Player(int currentHitPoints, int maxHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maxHitPoints)
+        public Player(int currentHitPoints, int maxHitPoints, int gold, int experiencePoints, string name) : base(currentHitPoints, maxHitPoints, name)
         {
             this.gold = gold;
             this.experiencePoints = experiencePoints;
@@ -35,7 +36,7 @@ namespace Engine.Creatures.Player
             quests = new List<PlayerQuest>();
         }
 
-        public Player(int maxHitPoints, int str, int dexterity, int con, int intel, int wis, int charisma) : base (maxHitPoints, maxHitPoints)
+        public Player(int maxHitPoints, int str, int dexterity, int con, int intel, int wis, int charisma, string name) : base (maxHitPoints, maxHitPoints, name)
         {
             currentHitPoints = maxHitPoints;
             maximumHitPoints = maxHitPoints;
