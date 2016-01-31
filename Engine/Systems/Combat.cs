@@ -14,11 +14,16 @@ namespace Engine.Systems
         private Player _player { get; set; }
         private Monster _monster { get; set; }
 
-        private Messenger messenger;
+        private Messenger messenger = new Messenger();
 
         private int playerInit, monsterInit;
 
         public bool inCombat { get; set; }
+
+        public Combat()
+        {
+
+        }
 
         public Combat(Player player, Monster monster)
         {

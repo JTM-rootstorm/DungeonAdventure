@@ -86,7 +86,7 @@ namespace Engine.Creatures.Player
 
         public Weapon currentWeapon { get; set; }
 
-        private Messenger messenger;
+        private Messenger messenger = new Messenger();
 
         public List<Weapon> weapons
         {

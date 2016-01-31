@@ -19,9 +19,8 @@ namespace DungeonAdventure
     public partial class DungeonAdventure : Form
     {
         private Player _player;
-        private Monster _currentMonster;
-        private Messenger messenger;
-        private Combat combat;
+        private Messenger messenger = new Messenger();
+        private Combat combat = new Combat();
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
 
         public DungeonAdventure()
