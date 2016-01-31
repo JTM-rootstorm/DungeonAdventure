@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Linq;
 
 using Engine;
+
+using Engine.Systems;
 
 using Engine.Items;
 using Engine.Items.Player;
@@ -11,16 +14,14 @@ using Engine.Items.Player;
 using Engine.Creatures.Player;
 using Engine.Creatures.Monsters;
 
-using Engine.World;
-using System.ComponentModel;
-using System.Linq;
-
 namespace DungeonAdventure
 {
     public partial class DungeonAdventure : Form
     {
         private Player _player;
         private Monster _currentMonster;
+        private Messenger messenger;
+        private Combat combat;
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
 
         public DungeonAdventure()
@@ -93,7 +94,7 @@ namespace DungeonAdventure
             cboPotions.ValueMember = "Id";
 
             _player.PropertyChanged += PlayerOnPropertyChanged;
-            _player.OnMessage += DisplayMessage;
+            messenger.OnMessage += DisplayMessage;
 
             _player.MoveTo(_player.currentLocation);
         }
@@ -188,14 +189,17 @@ namespace DungeonAdventure
         {
             Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
 
-            _player.UseWeapon(currentWeapon);
+            if (combat.inCombat)
+            {
+                _player.UseWeapon(currentWeapon);
+            }
         }
 
         private void btnUsePotion_Click(object sender, EventArgs e)
         {
             HealingPotion potion = (HealingPotion)cboPotions.SelectedItem;
 
-            _player.UsePotion(potion);
+            combat.PlayerUsePotion(potion);
         }
 
         private void DungeonAdventure_FormClosing(object sender, FormClosingEventArgs e)

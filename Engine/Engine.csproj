@@ -60,6 +60,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
+    <Compile Include="Systems\Combat.cs" />
+    <Compile Include="Systems\Messenger.cs" />
     <Compile Include="World\World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

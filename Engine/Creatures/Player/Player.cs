@@ -8,6 +8,8 @@ using Engine.Items;
 using Engine.Items.Player;
 using Engine.Creatures.Monsters;
 
+using Engine.Systems;
+
 namespace Engine.Creatures.Player
 {
     public class Player : Creature
@@ -84,7 +86,7 @@ namespace Engine.Creatures.Player
 
         public Weapon currentWeapon { get; set; }
 
-        public event EventHandler<MessageEventArgs> OnMessage;
+        private Messenger messenger;
 
         public List<Weapon> weapons
         {
@@ -415,20 +417,12 @@ namespace Engine.Creatures.Player
             }
         }
 
-        private void RaiseMessage(string message, bool addExtraNewLine = false)
-        {
-            if(OnMessage != null)
-            {
-                OnMessage(this, new MessageEventArgs(message, addExtraNewLine));
-            }
-        }
-
         public void MoveTo(Location newLocation)
         {
             //Does the location have any required items
             if (!HasRequiredItemToEnterThisLocation(newLocation))
             {
-                RaiseMessage("You must have a " + newLocation.itemRequiredToEnter.name + " to enter this location.");
+                messenger.RaiseMessage("You must have a " + newLocation.itemRequiredToEnter.name + " to enter this location.");
                 return;
             }
 
@@ -455,17 +449,17 @@ namespace Engine.Creatures.Player
                         if (playerHasAllItemsToCompleteQuest)
                         {
                             // Display message
-                            RaiseMessage("");
-                            RaiseMessage("You complete the '" + newLocation.questAvailableHere.name + "' quest.");
+                            messenger.RaiseMessage("");
+                            messenger.RaiseMessage("You complete the '" + newLocation.questAvailableHere.name + "' quest.");
 
                             // Remove quest items from inventory
                             RemoveQuestCompletionItems(newLocation.questAvailableHere);
 
                             // Give quest rewards
-                            RaiseMessage("You receive: ");
-                            RaiseMessage(newLocation.questAvailableHere.rewardExperiencePoints + " experience points");
-                            RaiseMessage(newLocation.questAvailableHere.rewardGold + " gold");
-                            RaiseMessage(newLocation.questAvailableHere.rewardItem.name, true);
+                            messenger.RaiseMessage("You receive: ");
+                            messenger.RaiseMessage(newLocation.questAvailableHere.rewardExperiencePoints + " experience points");
+                            messenger.RaiseMessage(newLocation.questAvailableHere.rewardGold + " gold");
+                            messenger.RaiseMessage(newLocation.questAvailableHere.rewardItem.name, true);
 
                             AddExperiencePoints(newLocation.questAvailableHere.rewardExperiencePoints);
                             gold += newLocation.questAvailableHere.rewardGold;
@@ -483,21 +477,21 @@ namespace Engine.Creatures.Player
                     // The player does not already have the quest
 
                     // Display the messages
-                    RaiseMessage("You receive the " + newLocation.questAvailableHere.name + " quest.");
-                    RaiseMessage(newLocation.questAvailableHere.description);
-                    RaiseMessage("To complete it, return with:");
+                    messenger.RaiseMessage("You receive the " + newLocation.questAvailableHere.name + " quest.");
+                    messenger.RaiseMessage(newLocation.questAvailableHere.description);
+                    messenger.RaiseMessage("To complete it, return with:");
                     foreach (QuestCompletionItem qci in newLocation.questAvailableHere.questCompletionItems)
                     {
                         if (qci.quantity == 1)
                         {
-                            RaiseMessage(qci.quantity + " " + qci.details.name);
+                            messenger.RaiseMessage(qci.quantity + " " + qci.details.name);
                         }
                         else
                         {
-                            RaiseMessage(qci.quantity + " " + qci.details.namePlural);
+                            messenger.RaiseMessage(qci.quantity + " " + qci.details.namePlural);
                         }
                     }
-                    RaiseMessage("");
+                    messenger.RaiseMessage("");
 
                     // Add the quest to the player's quest list
                     quests.Add(new PlayerQuest(newLocation.questAvailableHere));
@@ -507,7 +501,7 @@ namespace Engine.Creatures.Player
             // Does the location have a monster?
             if (newLocation.monsterLivingHere != null)
             {
-                RaiseMessage("You see a " + newLocation.monsterLivingHere.name);
+                messenger.RaiseMessage("You see a " + newLocation.monsterLivingHere.name);
 
                 // Make a new monster, using the values from the standard monster in the World.Monster list
                 Monster standardMonster = World.World.MonsterByID(newLocation.monsterLivingHere.ID);
@@ -528,29 +522,38 @@ namespace Engine.Creatures.Player
 
         public void UseWeapon(Weapon weapon)
         {
-            // Determine the amount of damage to do to the monster
-            int damageToMonster = RandomNumberGenerator.NumberBetween(weapon.minimumDamage, weapon.maximumDamage) + damageMod;
+            int attackRoll = RandomNumberGenerator.NumberBetween(1, 20) + attackMod;
 
-            // Apply the damage to the monster's CurrentHitPoints
-            _currentMonster.currentHitPoints -= damageToMonster;
+            if(attackRoll >= _currentMonster.AC)
+            {
+                // Determine the amount of damage to do to the monster
+                int damageToMonster = RandomNumberGenerator.NumberBetween(weapon.minimumDamage, weapon.maximumDamage) + damageMod;
 
-            // Display message
-            RaiseMessage("You hit the " + _currentMonster.name + " for " + damageToMonster + " points.");
+                // Apply the damage to the monster's CurrentHitPoints
+                _currentMonster.currentHitPoints -= damageToMonster;
+
+                // Display message
+                messenger.RaiseMessage("You hit the " + _currentMonster.name + " for " + damageToMonster + " points.");
+            }
+            else
+            {
+                messenger.RaiseMessage("You missed the " + _currentMonster.name + "!");
+            }
 
             // Check if the monster is dead
             if (_currentMonster.currentHitPoints <= 0)
             {
                 // Monster is dead
-                RaiseMessage("");
-                RaiseMessage("You defeated the " + _currentMonster.name);
+                messenger.RaiseMessage("");
+                messenger.RaiseMessage("You defeated the " + _currentMonster.name);
 
                 // Give player experience points for killing the monster
                 AddExperiencePoints(_currentMonster.rewardExperiencePoints);
-                RaiseMessage("You receive " + _currentMonster.rewardExperiencePoints + " experience points");
+                messenger.RaiseMessage("You receive " + _currentMonster.rewardExperiencePoints + " experience points");
 
                 // Give player gold for killing the monster 
                 gold += _currentMonster.rewardGold;
-                RaiseMessage("You receive " + _currentMonster.rewardGold + " gold");
+                messenger.RaiseMessage("You receive " + _currentMonster.rewardGold + " gold");
 
                 // Get random loot items from the monster
                 List<InventoryItem> lootedItems = new List<InventoryItem>();
@@ -583,16 +586,16 @@ namespace Engine.Creatures.Player
 
                     if (inventoryItem.quantity == 1)
                     {
-                        RaiseMessage("You loot " + inventoryItem.quantity + " " + inventoryItem.details.name);
+                        messenger.RaiseMessage("You loot " + inventoryItem.quantity + " " + inventoryItem.details.name);
                     }
                     else
                     {
-                        RaiseMessage("You loot " + inventoryItem.quantity + " " + inventoryItem.details.namePlural);
+                        messenger.RaiseMessage("You loot " + inventoryItem.quantity + " " + inventoryItem.details.namePlural);
                     }
                 }
 
                 // Add a blank line to the messages box, just for appearance.
-                RaiseMessage("");
+                messenger.RaiseMessage("");
 
                 // Move player to current location (to heal player and create a new monster to fight)
                 MoveTo(currentLocation);
@@ -600,20 +603,27 @@ namespace Engine.Creatures.Player
             else
             {
                 // Monster is still alive
+                attackRoll = RandomNumberGenerator.NumberBetween(1, 20) + _currentMonster.attackMod;
 
-                // Determine the amount of damage the monster does to the player
-                int damageToPlayer = RandomNumberGenerator.NumberBetween(0, _currentMonster.maximumDamage);
+                if(attackRoll >= AC)
+                {
+                    // Determine the amount of damage the monster does to the player
+                    int damageToPlayer = RandomNumberGenerator.NumberBetween(_currentMonster.minimumDamage, _currentMonster.maximumDamage);
 
-                // Display message
-                RaiseMessage("The " + _currentMonster.name + " did " + damageToPlayer + " points of damage.");
+                    // Display message
+                    messenger.RaiseMessage("The " + _currentMonster.name + " did " + damageToPlayer + " points of damage.");
 
-                // Subtract damage from player
-                currentHitPoints -= damageToPlayer;
+                    // Subtract damage from player
+                    currentHitPoints -= damageToPlayer;
+                }
 
                 if (currentHitPoints <= 0)
                 {
                     // Display message
-                    RaiseMessage("The " + _currentMonster.name + " killed you.");
+                    messenger.RaiseMessage("The " + _currentMonster.name + " killed you.");
+
+                    /* Keep for debug */
+                    currentHitPoints = maximumHitPoints;
 
                     // Move player to "Home"
                     MoveHome();
@@ -636,23 +646,27 @@ namespace Engine.Creatures.Player
             RemoveItemFromInventory(potion, 1);
 
             // Display message
-            RaiseMessage("You drink a " + potion.name);
+            messenger.RaiseMessage("You drink a " + potion.name);
 
             // Monster gets their turn to attack
+            int attackRoll = RandomNumberGenerator.NumberBetween(1, 20) + _currentMonster.attackMod;
 
-            // Determine the amount of damage the monster does to the player
-            int damageToPlayer = RandomNumberGenerator.NumberBetween(0, _currentMonster.maximumDamage);
+            if (attackRoll >= AC)
+            {
+                // Determine the amount of damage the monster does to the player
+                int damageToPlayer = RandomNumberGenerator.NumberBetween(_currentMonster.minimumDamage, _currentMonster.maximumDamage);
 
-            // Display message
-            RaiseMessage("The " + _currentMonster.name + " did " + damageToPlayer + " points of damage.");
+                // Display message
+                messenger.RaiseMessage("The " + _currentMonster.name + " did " + damageToPlayer + " points of damage.");
 
-            // Subtract damage from player
-            currentHitPoints -= damageToPlayer;
+                // Subtract damage from player
+                currentHitPoints -= damageToPlayer;
+            }
 
             if (currentHitPoints <= 0)
             {
                 // Display message
-                RaiseMessage("The " + _currentMonster.name + " killed you.");
+                messenger.RaiseMessage("The " + _currentMonster.name + " killed you.");
 
                 // Move player to "Home"
                 MoveHome();
