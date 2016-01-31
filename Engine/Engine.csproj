@@ -54,6 +54,7 @@
     <Compile Include="Items\QuestCompletionItem.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="MessageEventArgs.cs" />
     <Compile Include="NumberAssigner.cs" />
     <Compile Include="PlayerQuest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
