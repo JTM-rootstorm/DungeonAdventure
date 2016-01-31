@@ -261,7 +261,7 @@
             this.cboRace.Items.AddRange(new object[] {
             "Dwarf - Hill",
             "Dwarf - Moutain",
-            "Elf- High",
+            "Elf - High",
             "Elf - Wood",
             "Halfling - Lightfoot",
             "Halfling - Stout",

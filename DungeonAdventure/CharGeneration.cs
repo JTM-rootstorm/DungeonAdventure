@@ -136,7 +136,61 @@ namespace DungeonAdventure
                 halfElfBonusAbs = 2;
             }
 
-            if(selection == "Human")
+            if(selection == "Dwarf - Hill")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "2";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "1";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Dwarf - Mountain")
+            {
+                lblAbsStrRmod.Text = "2";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "2";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Elf - High")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "2";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "1";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Elf - Wood")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "2";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "1";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Halfling - Lightfoot")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "2";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "1";
+            }
+            else if(selection == "Halfling - Stout")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "2";
+                lblAbsConRmod.Text = "1";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Human")
             {
                 lblAbsStrRmod.Text = "1";
                 lblAbsDexRmod.Text = "1";
@@ -144,6 +198,51 @@ namespace DungeonAdventure
                 lblAbsIntRmod.Text = "1";
                 lblAbsWisRmod.Text = "1";
                 lblAbsChaRmod.Text = "1";
+            }
+            else if(selection == "Dragonborn")
+            {
+                lblAbsStrRmod.Text = "2";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "1";
+            }
+            else if(selection == "Gnome - Forest")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "1";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "2";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Gnome - Rock")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "1";
+                lblAbsIntRmod.Text = "2";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Half-Orc")
+            {
+                lblAbsStrRmod.Text = "2";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "1";
+                lblAbsIntRmod.Text = "0";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "0";
+            }
+            else if(selection == "Tiefling")
+            {
+                lblAbsStrRmod.Text = "0";
+                lblAbsDexRmod.Text = "0";
+                lblAbsConRmod.Text = "0";
+                lblAbsIntRmod.Text = "1";
+                lblAbsWisRmod.Text = "0";
+                lblAbsChaRmod.Text = "2";
             }
 
             UpdateStats();
