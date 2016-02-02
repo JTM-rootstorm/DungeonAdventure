@@ -64,6 +64,8 @@
             this.chkConRmod = new System.Windows.Forms.CheckBox();
             this.chkIntRmod = new System.Windows.Forms.CheckBox();
             this.chkWisRmod = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboRollType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -288,7 +290,7 @@
             // 
             // btnRollAbs
             // 
-            this.btnRollAbs.Location = new System.Drawing.Point(135, 305);
+            this.btnRollAbs.Location = new System.Drawing.Point(145, 276);
             this.btnRollAbs.Name = "btnRollAbs";
             this.btnRollAbs.Size = new System.Drawing.Size(107, 42);
             this.btnRollAbs.TabIndex = 28;
@@ -415,11 +417,35 @@
             this.chkWisRmod.UseVisualStyleBackColor = true;
             this.chkWisRmod.CheckedChanged += new System.EventHandler(this.chkWisRmod_CheckedChanged);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(74, 329);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(55, 13);
+            this.label11.TabIndex = 41;
+            this.label11.Text = "Roll Type:";
+            // 
+            // cboRollType
+            // 
+            this.cboRollType.FormattingEnabled = true;
+            this.cboRollType.Items.AddRange(new object[] {
+            "3d6",
+            "2d6+6",
+            "4d6 drop lowest 1",
+            "5d6 drop lowest 2"});
+            this.cboRollType.Location = new System.Drawing.Point(138, 324);
+            this.cboRollType.Name = "cboRollType";
+            this.cboRollType.Size = new System.Drawing.Size(121, 21);
+            this.cboRollType.TabIndex = 42;
+            // 
             // CharGeneration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 419);
+            this.ClientSize = new System.Drawing.Size(381, 367);
+            this.Controls.Add(this.cboRollType);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.chkWisRmod);
             this.Controls.Add(this.chkIntRmod);
             this.Controls.Add(this.chkConRmod);
@@ -501,5 +527,7 @@
         private System.Windows.Forms.CheckBox chkConRmod;
         private System.Windows.Forms.CheckBox chkIntRmod;
         private System.Windows.Forms.CheckBox chkWisRmod;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cboRollType;
     }
 }
