@@ -12,6 +12,7 @@ namespace Engine.World
         public static readonly List<Monster> monsters = new List<Monster>();
         public static readonly List<Quest> quests = new List<Quest>();
         public static readonly List<Location> locations = new List<Location>();
+        public static readonly List<Location[,]> dungeonFloors = new List<Location[,]>();
 
         public const int WEAPON_ID_SHORT_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
