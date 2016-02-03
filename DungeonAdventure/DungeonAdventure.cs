@@ -26,6 +26,19 @@ namespace DungeonAdventure
         public DungeonAdventure()
         {
             InitializeComponent();
+            LoadPlayer();
+            InitData();
+        }
+
+        public DungeonAdventure(Player in_player)
+        {
+            InitializeComponent();
+            _player = in_player;
+            InitData();
+        }
+
+        private void LoadPlayer()
+        {
 
             if (File.Exists(PLAYER_DATA_FILE_NAME))
             {
@@ -35,6 +48,10 @@ namespace DungeonAdventure
             {
                 _player = Player.CreateDefaultPlayer();
             }
+        }
+
+        private void InitData()
+        {
 
             lblHitPoints.DataBindings.Add("Text", _player, "currentHitPoints");
             lblGold.DataBindings.Add("Text", _player, "gold");
@@ -81,7 +98,7 @@ namespace DungeonAdventure
             cboWeapons.DisplayMember = "Name";
             cboWeapons.ValueMember = "Id";
 
-            if(_player.currentWeapon != null)
+            if (_player.currentWeapon != null)
             {
                 cboWeapons.SelectedItem = _player.currentWeapon;
             }
@@ -204,6 +221,7 @@ namespace DungeonAdventure
         private void DungeonAdventure_FormClosing(object sender, FormClosingEventArgs e)
         {
             File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXMLString());
+            Application.Exit();
         }
 
         private void cboWeapons_SelectedIndexChanged(object sender, EventArgs e)

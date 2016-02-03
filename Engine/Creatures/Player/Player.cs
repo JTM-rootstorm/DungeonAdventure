@@ -107,6 +107,9 @@ namespace Engine.Creatures.Player
 
             inventory = new BindingList<InventoryItem>();
             quests = new BindingList<PlayerQuest>();
+
+            inventory.Add(new InventoryItem(World.World.ItemByID(World.World.WEAPON_ID_SHORT_SWORD), 1));
+            currentLocation = World.World.LocationByID(World.World.LOCATION_ID_HOME);
         }
 
         public void AddExperiencePoints(int experiencePointsToAdd)

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using Engine;
+using Engine.Creatures.Player;
 
 namespace DungeonAdventure
 {
@@ -256,6 +257,22 @@ namespace DungeonAdventure
             }
 
             UpdateStats();
+        }
+
+        private void btnDone_Click(object sender, EventArgs e)
+        {
+            if(cboRace.Text != "" && str != 0 && dex != 0 && con != 0 && intel != 0 && wis != 0 && cha != 0)
+            {
+                Player _player = new Player(20, 20, str, dex, con, intel, wis, cha, "");
+                new DungeonAdventure(_player).Show();
+                Hide();
+                Enabled = false;
+            }
+        }
+
+        private void CharGeneration_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void chkStrRmod_CheckedChanged(object sender, EventArgs e)
