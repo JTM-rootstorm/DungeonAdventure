@@ -19,7 +19,6 @@ namespace DungeonAdventure
     public partial class DungeonAdventure : Form
     {
         private Player _player;
-        private Messenger messenger = new Messenger();
         private Combat combat = new Combat();
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
 
@@ -110,7 +109,7 @@ namespace DungeonAdventure
             cboPotions.ValueMember = "Id";
 
             _player.PropertyChanged += PlayerOnPropertyChanged;
-            messenger.OnMessage += DisplayMessage;
+            _player.OnMessage += DisplayMessage;
 
             _player.MoveTo(_player.currentLocation);
         }

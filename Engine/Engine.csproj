@@ -61,8 +61,7 @@
     <Compile Include="Quest.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
     <Compile Include="Systems\Combat.cs" />
-    <Compile Include="Systems\Messenger.cs" />
-    <Compile Include="World\World.cs" />
+    <Compile Include="Systems\World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

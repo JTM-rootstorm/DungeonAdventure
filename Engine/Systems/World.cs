@@ -4,14 +4,13 @@ using Engine.Items;
 using Engine.Items.Player;
 using Engine.Creatures.Monsters;
 
-namespace Engine.World
+namespace Engine.Systems
 {
     public static class World
     {
         public static readonly List<Item> items = new List<Item>();
         public static readonly List<Monster> monsters = new List<Monster>();
         public static readonly List<Quest> quests = new List<Quest>();
-        public static readonly List<Location> locations = new List<Location>();
         public static readonly List<Location[,]> dungeonFloors = new List<Location[,]>();
 
         public const int WEAPON_ID_SHORT_SWORD = 1;
@@ -115,6 +114,9 @@ namespace Engine.World
 
         private static void PopulateLocations()
         {
+            // floor 1
+            Location[,] firstFloor = new Location[4, 6];
+
             // Create each location
             Location home = new Location(LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
 
@@ -140,41 +142,39 @@ namespace Engine.World
             spiderField.monsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
 
             // Link the locations together
-            home.locationToNorth = townSquare;
+            firstFloor[3, 2] = home;
 
-            townSquare.locationToNorth = alchemistHut;
-            townSquare.locationToSouth = home;
-            townSquare.locationToEast = guardPost;
-            townSquare.locationToWest = farmhouse;
+            firstFloor[2, 2] = townSquare;
+            firstFloor[2, 3] = guardPost;
+            firstFloor[2, 4] = bridge;
+            firstFloor[2, 5] = spiderField;
 
-            farmhouse.locationToEast = townSquare;
-            farmhouse.locationToWest = farmersField;
+            firstFloor[1, 2] = alchemistHut;
+            firstFloor[1, 1] = farmhouse;
+            firstFloor[1, 0] = farmersField;
 
-            farmersField.locationToEast = farmhouse;
+            firstFloor[0, 2] = alchemistsGarden;
 
-            alchemistHut.locationToSouth = townSquare;
-            alchemistHut.locationToNorth = alchemistsGarden;
-
-            alchemistsGarden.locationToSouth = alchemistHut;
-
-            guardPost.locationToEast = bridge;
-            guardPost.locationToWest = townSquare;
-
-            bridge.locationToWest = guardPost;
-            bridge.locationToEast = spiderField;
-
-            spiderField.locationToWest = bridge;
+            foreach (Location loc in firstFloor)
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    for(int j = 0; j < 6; j++)
+                    {
+                        if(firstFloor[i,j] == null)
+                        {
+                            continue;
+                        }
+                        else if (firstFloor[i,j] == loc)
+                        {
+                            loc.GenerateLocationLinks(firstFloor, i, j, 3, 5);
+                        }
+                    }
+                }
+            }
 
             // Add the locations to the static list
-            locations.Add(home);
-            locations.Add(townSquare);
-            locations.Add(guardPost);
-            locations.Add(alchemistHut);
-            locations.Add(alchemistsGarden);
-            locations.Add(farmhouse);
-            locations.Add(farmersField);
-            locations.Add(bridge);
-            locations.Add(spiderField);
+            dungeonFloors.Add(firstFloor);
         }
 
         public static Item ItemByID(int id)
@@ -218,11 +218,21 @@ namespace Engine.World
 
         public static Location LocationByID(int id)
         {
-            foreach (Location location in locations)
+            foreach(Location[,] locAr in dungeonFloors)
             {
-                if (location.ID == id)
+                foreach(Location location in locAr)
                 {
-                    return location;
+                    if(location == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if(location.ID == id)
+                        {
+                            return location;
+                        }
+                    }
                 }
             }
 

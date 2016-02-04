@@ -26,5 +26,44 @@ namespace Engine
             this.questAvailableHere = questAvailableHere;
             this.monsterLivingHere = monsterLivingHere;
         }
+
+        public void GenerateLocationLinks(Location[,] dungeonFloor, int row, int col, int maxX, int maxY)
+        {
+            if(row != 0)
+            {
+                locationToNorth = dungeonFloor[row - 1, col];
+            }
+            else
+            {
+                locationToNorth = null;
+            }
+
+            if(row != maxX)
+            {
+                locationToSouth = dungeonFloor[row + 1, col];
+            }
+            else
+            {
+                locationToSouth = null;
+            }
+
+            if(col != 0)
+            {
+                locationToWest = dungeonFloor[row, col - 1];
+            }
+            else
+            {
+                locationToWest = null;
+            }
+
+            if(col != maxY)
+            {
+                locationToEast = dungeonFloor[row, col + 1];
+            }
+            else
+            {
+                locationToEast = null;
+            }         
+        }
     }
 }

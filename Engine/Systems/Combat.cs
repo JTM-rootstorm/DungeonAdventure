@@ -1,11 +1,11 @@
-﻿using Engine;
-
-using Engine.Items;
+﻿using Engine.Items;
 using Engine.Items.Player;
 
 using Engine.Creatures;
 using Engine.Creatures.Player;
 using Engine.Creatures.Monsters;
+
+using System;
 
 namespace Engine.Systems
 {
@@ -14,7 +14,7 @@ namespace Engine.Systems
         private Player _player { get; set; }
         private Monster _monster { get; set; }
 
-        private Messenger messenger = new Messenger();
+        public event EventHandler<MessageEventArgs> OnMessage;
 
         private int playerInit, monsterInit;
 
@@ -39,6 +39,14 @@ namespace Engine.Systems
             return RandomNumberGenerator.NumberBetween(1, 20) + creature.FindAttModifier(creature.dexterity);
         }
 
+        private void RaiseMessage(string message, bool addExtraNewLine = false)
+        {
+            if (OnMessage != null)
+            {
+                OnMessage(this, new MessageEventArgs(message, addExtraNewLine));
+            }
+        }
+
         public void PlayerUsePotion(HealingPotion potion)
         {
             if(_player.currentHitPoints < _player.maximumHitPoints)
@@ -56,11 +64,11 @@ namespace Engine.Systems
                 _player.RemoveItemFromInventory(potion, 1);
 
                 // Display message
-                messenger.RaiseMessage("You drink a " + potion.name);
+                RaiseMessage("You drink a " + potion.name);
             }
             else
             {
-                messenger.RaiseMessage("You don't need to drink one of those right now!");
+                RaiseMessage("You don't need to drink one of those right now!");
             }
         }
 
@@ -77,11 +85,11 @@ namespace Engine.Systems
                 _monster.currentHitPoints -= damageToMonster;
 
                 // Display message
-                messenger.RaiseMessage("You hit the " + _monster.name + " for " + damageToMonster + " points.");
+                RaiseMessage("You hit the " + _monster.name + " for " + damageToMonster + " points.");
             }
             else
             {
-                messenger.RaiseMessage("You missed the " + _monster.name + "!");
+                RaiseMessage("You missed the " + _monster.name + "!");
             }
         }
 
@@ -95,7 +103,7 @@ namespace Engine.Systems
                 int damageToPlayer = RandomNumberGenerator.NumberBetween(_monster.minimumDamage, _monster.maximumDamage);
 
                 // Display message
-                messenger.RaiseMessage("The " + _monster.name + " did " + damageToPlayer + " points of damage.");
+                RaiseMessage("The " + _monster.name + " did " + damageToPlayer + " points of damage.");
 
                 // Subtract damage from player
                 _player.currentHitPoints -= damageToPlayer;
