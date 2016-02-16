@@ -52,6 +52,12 @@
     <Compile Include="CharGeneration.Designer.cs">
       <DependentUpon>CharGeneration.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClassSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassSelection.Designer.cs">
+      <DependentUpon>ClassSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="DungeonAdventure.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CharGeneration.resx">
       <DependentUpon>CharGeneration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassSelection.resx">
+      <DependentUpon>ClassSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DungeonAdventure.resx">
       <DependentUpon>DungeonAdventure.cs</DependentUpon>
